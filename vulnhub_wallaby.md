@@ -212,8 +212,7 @@ Connection: close
 name=value&name=value
 ```
 
-###DIRBUSTER
-
+### DIRBUSTER
 target url <http://192.168.86.142:60080>
 autoswitch (HEAD and GET)
 List Brute force using `/usr/share/dirbuster/wordlists/directory-list-lowercase-2.3-small.txt$
