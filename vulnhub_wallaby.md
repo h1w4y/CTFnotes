@@ -3,26 +3,27 @@
 <!-- TOC -->
 
 - [Vulnhub Wallaby's Nightmare 1](#vulnhub-wallabys-nightmare-1)
-    - [YouTube Stream](#youtube-stream)
+    - [YouTube Stream (by Cola)](#youtube-stream-by-cola)
     - [Follow Ups](#follow-ups)
-    - [VM TODO](#vm-todo)
-    - [NOTES](#notes)
-    - [NETWORK DISCOVERY](#network-discovery)
-    - [METASPLOIT WORK](#metasploit-work)
-    - [MESSAGES AND HINTS](#messages-and-hints)
-    - [SERVICES AND VULNS](#services-and-vulns)
-    - [WEB VECTORS](#web-vectors)
-    - [DIRBUSTER](#dirbuster)
-    - [IRC PATH](#irc-path)
-    - [KERNEL Privesc PATH (incomplete until I have a chance to come back to this)](#kernel-privesc-path-incomplete-until-i-have-a-chance-to-come-back-to-this)
-    - [IPTABLES NOTES](#iptables-notes)
+    - [VM ToDos](#vm-todos)
+    - [Notes](#notes)
+    - [Network Discovery](#network-discovery)
+    - [Messages and Hints](#messages-and-hints)
+    - [Metasploit Work](#metasploit-work)
+    - [Services and Vulns](#services-and-vulns)
+    - [Web Vectors](#web-vectors)
+    - [Dirbuster](#dirbuster)
+    - [IRC Path](#irc-path)
+    - [Kernel Exploit](#kernel-exploit)
+    - [IP Tables Reference](#ip-tables-reference)
 
 <!-- /TOC -->
+***
+### YouTube Stream (by Cola)
 
-### YouTube Stream
+<https://www.youtube.com/watch?v=DODDOn2JkZo>
 
-[https://www.youtube.com/watch?v=DODDOn2JkZo](https://www.youtube.com/watch?v=DODDOn2JkZo)
-
+***
 ### Follow Ups
 
 * [ ] Web injection from cli with curl, python, etc...
@@ -32,11 +33,11 @@
 * [x] OWASP ZAP - it’s big and heavy - hung when discovering content from a word list
 * [x] Burp - free edition doesn’t have content discovery, but the fuzzing is good - still big and clunky UI 
 
-### VM TODO
+***
+### VM ToDos
 
 * [x] apache version looks solid enough cvedetails.com
-* [x] look more into sshd vuln - only easy to find exploit is user enumeration - https://www.exploit-db.com/search/?action=search&q=OpenSSH+7.2p2&g-recaptcha-response=03AOP2lf5c3L8VShKLVseQceP-EppI8xpaiG3oUKcfmdTWs_klcfLfPtx_yOiqMFXpqiRum4ajII5w_l84WFvOPbWOpfuMsxykmbbAyH4r3ADFhKEVbSTQq2TuEp1dAnKYCGAtqIHzBjW8bZd0-QBRNa3A-S0Vs9KlTfj-gS25nJRUreoGiTVr2hHURC2HGRvIZWefLYICPw0lRHU7QmU-KS338UPfKnmZTUhsxtJhsAgkw1B2LeoelHbmNkuKdiXUIp-goYzsgrw04nAPvXFlgGx8l9bdpv1CRsH0BH8ZBAIN4gMzL__47bycftYNSNPYTazpYqWylhfP
-
+* [x] look more into sshd vuln - only easy to find exploit is user enumeration - [exploit-db link](https://www.exploit-db.com/search/?action=search&q=OpenSSH+7.2p2&g-recaptcha-response=03AOP2lf5c3L8VShKLVseQceP-EppI8xpaiG3oUKcfmdTWs_klcfLfPtx_yOiqMFXpqiRum4ajII5w_l84WFvOPbWOpfuMsxykmbbAyH4r3ADFhKEVbSTQq2TuEp1dAnKYCGAtqIHzBjW8bZd0-QBRNa3A-S0Vs9KlTfj-gS25nJRUreoGiTVr2hHURC2HGRvIZWefLYICPw0lRHU7QmU-KS338UPfKnmZTUhsxtJhsAgkw1B2LeoelHbmNkuKdiXUIp-goYzsgrw04nAPvXFlgGx8l9bdpv1CRsH0BH8ZBAIN4gMzL__47bycftYNSNPYTazpYqWylhfP)
 * [ ] how to check dhcpd version
 * [x] probably going to be some web app vector
 * [x] dirb
@@ -49,13 +50,14 @@
 * [ ] kernel is vulnerable to an privesc — check cowroot exploit — https://github.com/dirtycow/dirtycow.github.io/wiki/PoCs
 * [x] IRC 
 
-### NOTES
+***
+### Notes
 
-the openssh vuln may be used for privesc.  a hint was given “your environment matters”
+* the openssh vuln might be used for privilege escalation.  a hint was given “your environment matters”
 OpenSSH 7.2p2 has an interesting CVE — “allows local users to gain privs by triggering a crafted environment for /bin/login
 
-
-### NETWORK DISCOVERY
+***
+### Network Discovery
 
 Sweeping no-ping scan of subnet to find target
 ```
@@ -85,15 +87,8 @@ nmap with vuln scripts: (this is crap)
 nmap -sS 192.168.86.140 -p- -oA outputfile.out -v -sV --script vuln
 ```
 
-### METASPLOIT WORK
-
-```
-msfconsole
-msf > workspace wallaby
-msf > db_import ~/wallaby/*xml  (imports our nmap scans)
-```
-
-### MESSAGES AND HINTS
+***
+### Messages and Hints
 
 > Welcome to the Wallaby's Worst Knightmare 2 part series VM.
 > A few tips.
@@ -102,7 +97,17 @@ msf > db_import ~/wallaby/*xml  (imports our nmap scans)
 > 3. Your environment matters.
 > Good luck and have fun! -Waldo
 
-### SERVICES AND VULNS
+***
+### Metasploit Work
+
+```
+msfconsole
+msf > workspace wallaby
+msf > db_import ~/wallaby/*xml  (imports our nmap scans)
+```
+
+***
+### Services and Vulns
 
 ```
 host            port   proto  name   state     info
@@ -119,7 +124,8 @@ https://www.cvedetails.com/cve/CVE-2015-8325/
 The do_setup_env function in session.c in sshd in OpenSSH through 7.2p2, when the UseLogin feature is enabled and PAM is configured to read .pam_environment files in user home directories, allows local users to gain privileges by triggering a crafted environment for the /bin/login program, as demonstrated by an LD_PRELOAD environment variable.
 Publish Date : 2016-04-30 Last Update Date : 2016-11-30
 
-### WEB VECTORS
+***
+### Web Vectors
 
 LFI at 1st level of difficulty
 http://192.168.86.142/?page=../../../../../etc/passwd
@@ -212,7 +218,8 @@ Connection: close
 name=value&name=value
 ```
 
-### DIRBUSTER
+***
+### Dirbuster
 target url <http://192.168.86.142:60080>
 autoswitch (HEAD and GET)
 List Brute force using `/usr/share/dirbuster/wordlists/directory-list-lowercase-2.3-small.txt$
@@ -265,9 +272,12 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 $ uname -a
 Linux ubuntu 4.4.0-31-generic #50-Ubuntu SMP Wed Jul 13 00:07:12 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
 ```
-now with shell, you can go a few routes:
+now with shell, you can go a few routes:  
+[IRC Path](#irc-path)  
+[Kernel Exploit](#kernel-exploit)
 
-### IRC PATH
+***
+### IRC Path
 find the iptables filter on 6667 (IRC) 
 ```
 $ sudo iptables -L --line-numbers
@@ -309,10 +319,10 @@ figure the bot is going to give us our next step.  After trying a bunch of rando
 ```
 $ find /home
 ```
-* the /ircd/unreal` stuff is irc service software and config  
-* the /waldo and /wallaby irssi stuff is an IRC client config  
-* /home/waldo has a tmux startup script that starts the irc client and connects to the IRC server as /nick waldo
-* stuff in /home/wallaby/.sopel looks relevant to the IRC bot
+* the `/ircd/unreal` stuff is irc service software and config  
+* the `/waldo` and `/wallaby` irssi stuff is an IRC client config  
+* `/home/waldo` has a `tmux` startup script that starts the irc client and connects to the IRC server as /nick waldo
+* stuff in `/home/wallaby/.sopel` looks relevant to the IRC bot
 ```
 $ pwd
 /home/wallaby/.sopel
@@ -339,12 +349,16 @@ this is confirmed in the IRC session:
 
 The designed route is to use sudo/vi to get shell.  Instead I tried to get waldo out so I could assume his nickname:
 
-try blocking traffic to ircd until irc sessions time out
-add an iptables rule, wait for irc sessions to timeout, then remove the blocking rule to ircd and see if you can connect and take the waldo nick
-this works, but unfortunately the irc bot (sopel bot) times out and never reconnects.  the bot service is started by /etc/init.d/sopel
+* try blocking traffic to ircd until irc sessions time out (see IP Tales Reference Section)[### IP Tables Command Reference]
+* add an iptables rule
+* wait for irc sessions to timeout
+* then remove the blocking rule to ircd
+* see if you can connect and take the waldo nick
+
+this works, but unfortunately the irc bot (sopel bot) times out and never reconnects.  the bot service is started by `/etc/init.d/sopel`
 
 so at this point i’m kind of stuck on the IRC path, and i want to restart the VM.  
-so I used the other allowable sudo command, vi, to move the tmux irc startup script in waldo’s home directory
+so I used the other allowable sudo command, `vi`, to move the `tmux` irc startup script in waldo’s home directory
 ```
 User www-data may run the following commands on ubuntu:
     (waldo) NOPASSWD: /usr/bin/vim /etc/apache2/sites-available/000-default.conf
@@ -369,7 +383,9 @@ as waldo, `sudo -l` finds that you effectively have root.
 grab the flag from /root directory and done
 
 
-### KERNEL Privesc PATH (incomplete until I have a chance to come back to this)
+### Kernel Exploit
+_vulnerable to dirtycow_
+(incomplete until I have a chance to come back to this)
 ```
 $ uname -a
 Linux ubuntu 4.4.0-31-generic #50-Ubuntu SMP Wed Jul 13 00:07:12 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
@@ -377,9 +393,8 @@ $ cat /proc/version
 Linux version 4.4.0-31-generic (buildd@lgw01-16) (gcc version 5.3.1 20160413 (Ubuntu 5.3.1-14ubuntu2.1) ) #50-Ubuntu SMP Wed Jul 13 00:07:12 UTC 2016
 ```
 
-vulnerable to dirtycow
 
-### IPTABLES NOTES
+### IP Tables Reference
 ```
 www-data@ubuntu:/var/www/html$ sudo iptables -L -n -v  
 sudo iptables -L -n -v
