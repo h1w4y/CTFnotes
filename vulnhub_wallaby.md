@@ -119,10 +119,10 @@ host            port   proto  name   state     info
 192.168.86.140  60080  tcp    http   open      Apache httpd 2.4.18 (Ubuntu)
 ```
 
-OpenSSH 7.2p2 has an interesting CVE — “allows local users to gain privs by triggering a crafted environment for /bin/login
-https://www.cvedetails.com/cve/CVE-2015-8325/
-The do_setup_env function in session.c in sshd in OpenSSH through 7.2p2, when the UseLogin feature is enabled and PAM is configured to read .pam_environment files in user home directories, allows local users to gain privileges by triggering a crafted environment for the /bin/login program, as demonstrated by an LD_PRELOAD environment variable.
-Publish Date : 2016-04-30 Last Update Date : 2016-11-30
+OpenSSH 7.2p2 has an interesting CVE — “allows local users to gain privs by triggering a crafted environment for `/bin/login`  
+<https://www.cvedetails.com/cve/CVE-2015-8325/>  
+> The do_setup_env function in session.c in sshd in OpenSSH through 7.2p2, when the UseLogin feature is enabled and PAM is configured to read .pam_environment files in user home directories, allows local users to gain privileges by triggering a crafted environment for the /bin/login program, as demonstrated by an LD_PRELOAD environment variable.  
+> Publish Date : 2016-04-30 Last Update Date : 2016-11-30
 
 ***
 ### Web Vectors
