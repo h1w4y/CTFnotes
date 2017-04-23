@@ -6,7 +6,7 @@
     - [YouTube Stream (by Cola)](#youtube-stream-by-cola)
     - [Follow Ups](#follow-ups)
     - [VM ToDos](#vm-todos)
-    - [Notes](#notes)
+    - [Speculations](#speculations)
     - [Network Discovery](#network-discovery)
     - [Messages and Hints](#messages-and-hints)
     - [Metasploit Work](#metasploit-work)
@@ -51,7 +51,7 @@
 * [x] IRC 
 
 ***
-### Notes
+### Speculations
 
 * the openssh vuln might be used for privilege escalation.  a hint was given “your environment matters”
 OpenSSH 7.2p2 has an interesting CVE — “allows local users to gain privs by triggering a crafted environment for /bin/login
