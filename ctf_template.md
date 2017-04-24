@@ -1,12 +1,13 @@
-## Vulnhub - Lord Of The Root
+## Vulnhub - VMName
 <!-- TOC -->
 
-- [Vulnhub - Lord Of The Root](#vulnhub---lord-of-the-root)
+- [Vulnhub - VMName](#vulnhub---vmname)
     - [YouTube](#youtube)
     - [Lessons Learned](#lessons-learned)
     - [VM ToDos](#vm-todos)
     - [Speculations and Hints](#speculations-and-hints)
     - [Network Discovery](#network-discovery)
+    - [Metasploit Work](#metasploit-work)
     - [Service Details 1](#service-details-1)
     - [Service Details 2](#service-details-2)
     - [Direct Console Access](#direct-console-access)
@@ -29,7 +30,6 @@
 sweeping no-ping scan of subnet to find target
 ```
 nmap -Pn 192.168.xxx.0/24
-```
 ```
 TCP Syn Scan with light service detection
 ```
@@ -57,6 +57,7 @@ check hosts and services found by `nmap`
 msf > hosts
 
 msf > services
+```
 
 ***
 ### Service Details 1
