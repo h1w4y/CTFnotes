@@ -17,6 +17,7 @@
 
 ***
 ### Lessons Learned
+* [ ] do more reading on dirtycow
 
 ***
 ### VM ToDos
@@ -155,9 +156,11 @@ Hydra (http://www.thc.org/thc-hydra) starting at 2017-04-17 23:09:02
 ***
 ### Ubuntu Console Login
 from Ubuntu login screen a guest session can log in
-```
-uname -r for kernel version
-```
-try some dirtycow??
-<https://github.com/dirtycow/dirtycow.github.io.git>
 
+`uname -r` shows  
+3.19.0-25-generic
+
+some googling suggests that 3.19 might be vulnerable to dirtycow
+<https://github.com/dirtycow/dirtycow.github.io/wiki/Patched-Kernel-Versions>
+
+I downloaded/compiled/ran a couple dirtycow exploits, but didn't have any success.  It's possible even though the docs suggest kernel 3.19 is vulnerable, that i'm misreading or this is a patched version of 3.19  need to do more reading on dirtycow...
