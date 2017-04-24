@@ -8,6 +8,8 @@
     - [Speculations and Hints](#speculations-and-hints)
     - [Network Discovery](#network-discovery)
     - [Metasploit Work](#metasploit-work)
+    - [SSH Service](#ssh-service)
+    - [Ubuntu Console Login](#ubuntu-console-login)
 
 <!-- /TOC -->
 ***
@@ -18,9 +20,14 @@
 
 ***
 ### VM ToDos
+* [x] port scan  
+* [ ] port knocking 
 
 ***
 ### Speculations and Hints
+* smeagol is the default login from the vm's GUI console
+* the word "knock" is used in the `ssh` banner.  possibly a hint to try port knocking
+
 
 ***
 ### Network Discovery
@@ -79,6 +86,8 @@ host            port  proto  name  state  info
 ### SSH Service
 only service running on tcp/udp is SSH
 
+```
+
 OpenSSH 6.6.1p1
 [CVEDetails]( https://www.cvedetails.com/vulnerability-list/vendor_id-97/product_id-585/version_id-188831/Openbsd-Openssh-6.6.html)   
 nothing too interesting for getting access
@@ -103,17 +112,25 @@ Warning: Permanently added '192.168.86.144' (ECDSA) to the list of known hosts.
 |    |  \|   |  (  <_> )  \___|    <   |     \   |  | \/  \  ___/|   |  \/ /_/ |    |    |(  <_> )  |        \   |  \  | \  ___/|  | \/
 |____|__ \___|  /\____/ \___  >__|_ \  \___  /   |__|  |__|\___  >___|  /\____ |    |____| \____/  /_______  /___|  /__|  \___  >__|
         \/    \/            \/     \/      \/                  \/     \/      \/                           \/     \/          \/
+
 Easy as 1,2,3
 root@192.168.86.144's password: 
+
+
 ```
 
+the word "knock" in this banner makes me think
+* subdomain enumeration - but this isn't going to be it for a single vm
+* port knocking 
 
-I see “Knock” and think subdomain enumeration, but that can’t be it here.  
 Also tried a few wild guesses: user root, passwords “” “knock” “knockfriend” “KnockFriend”  
 
 Next thing is it’s possibly some LOTR reference, so google around for possible username/passwords related to that passage in the books  
 
-derp - when the vm booted, `smeagol` was set as the default login user…
+***
+### SSH Service
+
+when the vm booted, `smeagol` was set as the default login user…
 
 ```
 hydra options
