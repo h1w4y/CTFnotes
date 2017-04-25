@@ -5,6 +5,7 @@
     - [YouTube](#youtube)
     - [Lessons Learned](#lessons-learned)
     - [VM ToDos](#vm-todos)
+    - [Port Knocking](#port-knocking)
     - [Speculations and Hints](#speculations-and-hints)
     - [Network Discovery](#network-discovery)
     - [Metasploit Work](#metasploit-work)
@@ -25,7 +26,17 @@
 ***
 ### VM ToDos
 * [x] port scan  
-* [ ] port knocking 
+* [x] port knocking 
+* [ ] port knocking clients or `scapy` for port knocking
+
+***
+### Port Knocking
+- using standard `knockd`  
+- `/etc/knockd.conf` only readable by root
+- <https://github.com/jvinet/knock>
+- port knocking clients
+- scapy <http://secdev.org/projects/scapy/>
+- sequence is probably something to do with 1 2 3 from the banner-hint
 
 ***
 ### Speculations and Hints
