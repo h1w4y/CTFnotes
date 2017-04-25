@@ -10,6 +10,9 @@
     - [Metasploit Work](#metasploit-work)
     - [SSH Service](#ssh-service)
     - [Ubuntu Console Login](#ubuntu-console-login)
+    - [Got Shell](#got-shell)
+        - [Kernel](#kernel)
+        - [Processes](#processes)
 
 <!-- /TOC -->
 ***
@@ -157,10 +160,31 @@ Hydra (http://www.thc.org/thc-hydra) starting at 2017-04-17 23:09:02
 ### Ubuntu Console Login
 from Ubuntu login screen a guest session can log in
 
+### Got Shell
+
+#### Kernel
 `uname -r` shows  
 3.19.0-25-generic
 
 some googling suggests that 3.19 might be vulnerable to dirtycow
 <https://github.com/dirtycow/dirtycow.github.io/wiki/Patched-Kernel-Versions>
 
-I downloaded/compiled/ran a couple dirtycow exploits, but didn't have any success.  It's possible even though the docs suggest kernel 3.19 is vulnerable, that i'm misreading or this is a patched version of 3.19  need to do more reading on dirtycow...
+I downloaded/compiled/ran a couple dirtycow exploits, but didn't have any success.  It's possible even though the docs suggest kernel 3.19 is vulnerable, that i'm misreading or this is a patched version of 3.19  
+Need to do more reading on dirtycow...
+
+#### Processes
+with guess access from the ubuntu console, i'm able to run `ps`
+```
+$ ps aux | less
+```
+interesting processes running 
+- rsyslogd - not going to be listening on a port, but should check the version for CVEs
+- sshd running (we knew that from our port scan)
+- mysqld - juicy
+- knockd - the port knock server
+    - next step is to knock some ports to get network access
+- apache2 - really juicy
+   - 6 apache processes running  
+   - 1 running as root - i'm assuming this is an apache init process, been a while since I've done any web admin
+   - 5 running as additional workers - possibly supporting multiple sites/ports?
+
