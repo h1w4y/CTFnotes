@@ -11,6 +11,10 @@
     - [Service Details 1](#service-details-1)
     - [Service Details 2](#service-details-2)
     - [Direct Console Access](#direct-console-access)
+    - [Shell Access](#shell-access)
+        - [Interesting Processes](#interesting-processes)
+        - [Sudo Capabilities](#sudo-capabilities)
+        - [Homedir Search](#homedir-search)
 
 <!-- /TOC -->
 ***
@@ -67,3 +71,13 @@ msf > services
 
 ***
 ### Direct Console Access
+
+***
+### Shell Access
+
+#### Interesting Processes
+
+#### Sudo Capabilities
+
+#### Homedir Search
+`find /home`
