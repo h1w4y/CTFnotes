@@ -3,13 +3,14 @@
 
 - [Vulnhub - Lord Of The Root](#vulnhub---lord-of-the-root)
     - [YouTube](#youtube)
+    - [Speculations and Hints](#speculations-and-hints)
     - [Lessons Learned](#lessons-learned)
     - [VM ToDos](#vm-todos)
-    - [Port Knocking](#port-knocking)
-    - [Speculations and Hints](#speculations-and-hints)
     - [Network Discovery](#network-discovery)
     - [Metasploit Work](#metasploit-work)
     - [SSH Service](#ssh-service)
+    - [Port Knocking](#port-knocking)
+    - [Apache Service](#apache-service)
     - [Ubuntu Console Login](#ubuntu-console-login)
     - [Got Shell](#got-shell)
         - [Kernel](#kernel)
@@ -18,6 +19,12 @@
 <!-- /TOC -->
 ***
 ### YouTube
+
+***
+### Speculations and Hints
+* smeagol is the default login from the vm's GUI console
+* the word "knock" is used in the `ssh` banner.  possibly a hint to try port knocking
+
 
 ***
 ### Lessons Learned
@@ -30,32 +37,6 @@
 * [x] port knocking 
 * [ ] port knocking clients or `scapy` for port knocking
 
-***
-### Port Knocking
-- this vulnhub is using standard `knockd`
-- - as seen in the process list when logging in at the console as guest
-- - <https://github.com/jvinet/knock>
-- `/etc/knockd.conf` only readable by root
-- sequence is probably something to do with 1 2 3 from the banner-hint
-- there are some port knocking clients that could be used
-- this page demonstrates using `nmap` from a simple script to knock ports <https://wiki.archlinux.org/index.php/Port_knocking>
-
-```
-#!/bin/bash
-HOST=$1
-shift
-for ARG in "$@"
-do
-        nmap -Pn --host_timeout 100 --max-retries 0 -p $ARG $HOST
-done
-```
-script's first arg is the host you're knocking  
-any additional args are ports you want to knock
-
-***
-### Speculations and Hints
-* smeagol is the default login from the vm's GUI console
-* the word "knock" is used in the `ssh` banner.  possibly a hint to try port knocking
 
 
 ***
@@ -181,6 +162,47 @@ Hydra (http://www.thc.org/thc-hydra) starting at 2017-04-17 23:09:02
 [INFO] Testing if password authentication is supported by ssh://192.168.86.144:22
 [ERROR] target ssh://192.168.86.144:22/ does not support password authentication.
 ```
+***
+### Port Knocking
+- this vulnhub is using standard `knockd`
+- - as seen in the process list when logging in at the console as guest
+- - <https://github.com/jvinet/knock>
+- `/etc/knockd.conf` only readable by root
+- sequence is probably something to do with 1 2 3 from the banner-hint
+- there are some port knocking clients that could be used
+- this page demonstrates using `nmap` from a simple script to knock ports <https://wiki.archlinux.org/index.php/Port_knocking>
+
+```
+#!/bin/bash
+HOST=$1
+shift
+for ARG in "$@"
+do
+        nmap -Pn --host_timeout 100 --max-retries 0 -p $ARG $HOST
+done
+```
+script's first arg is the host you're knocking  
+any additional args are ports you want to knock  
+
+overthinking on my first try i knocked ports 1111,2222,3333  
+but if you just take the hint given by the ssh banner...
+```
+root@kali:~# ./knock.sh 192.168.86.144 1 2 3
+<a bunch of knock.sh nmap output snipped>
+```
+then we rerun a regular port scan...
+```
+root@kali:~# nmap -sS 192.168.86.144 -p- -oA outputfile.out -v -sV --version-intensity 2
+
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 6.6.1p1 Ubuntu 2ubuntu2.3 (Ubuntu Linux; protocol 2.0)
+1337/tcp open  http    Apache httpd 2.4.7 ((Ubuntu))
+```
+`knockd` has opened up the 1337 port where the web server is listening
+
+***
+### Apache Service
+
 
 ***
 ### Ubuntu Console Login
