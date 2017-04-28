@@ -21,7 +21,8 @@
 
 ***
 ### Lessons Learned
-* [ ] do more reading on dirtycow
+* [ ] do more reading on dirtycow (probably not relevant to this vm, but questions came up for me)
+* [ ] what are best practices/tools for pentesting `knockd`?
 
 ***
 ### VM ToDos
@@ -31,12 +32,25 @@
 
 ***
 ### Port Knocking
-- using standard `knockd`  
+- this vulnhub is using standard `knockd`
+- - as seen in the process list when logging in at the console as guest
+- - <https://github.com/jvinet/knock>
 - `/etc/knockd.conf` only readable by root
-- <https://github.com/jvinet/knock>
-- port knocking clients
-- scapy <http://secdev.org/projects/scapy/>
 - sequence is probably something to do with 1 2 3 from the banner-hint
+- there are some port knocking clients that could be used
+- this page demonstrates using `nmap` from a simple script to knock ports <https://wiki.archlinux.org/index.php/Port_knocking>
+
+```
+#!/bin/bash
+HOST=$1
+shift
+for ARG in "$@"
+do
+        nmap -Pn --host_timeout 100 --max-retries 0 -p $ARG $HOST
+done
+```
+script's first arg is the host you're knocking  
+any additional args are ports you want to knock
 
 ***
 ### Speculations and Hints
@@ -145,7 +159,8 @@ Next thing is it’s possibly some LOTR reference, so google around for possible
 ***
 ### SSH Service
 
-when the vm booted, `smeagol` was set as the default login user…
+when the vm booted, `smeagol` was set as the default login user…  
+tried a quick wordlist attack on the ssh server using `hydra`, but looks like this ssh server only takes keys.. or hydra is just misunderstanding a response
 
 ```
 hydra options
