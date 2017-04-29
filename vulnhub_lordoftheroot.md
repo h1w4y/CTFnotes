@@ -216,11 +216,11 @@ I happen to have burp Pro so i use its content discovery feature
 dirb/dirbuster/owasp zap are other options for content discovery  
 I've only done a couple of these Vulnhub labs yet, and so far it's been LAMP stack, so I focus discovery on .php to start  
 
-<http://192.168.86.144:1337/home.php>
-LFI attempt:  
-<http://192.168.86.144:1337/home.php?../../../../etc/passwd>
-<http://192.168.86.144:1337/robots.txt>
-both return another meme image
+<http://192.168.86.144:1337/home.php>  
+LFI attempt:   
+<http://192.168.86.144:1337/home.php?../../../../etc/passwd>  
+<http://192.168.86.144:1337/robots.txt>  
+both return another meme image  
 ```
 SAM WE CANT GO THIS WAY
 THE BLACK GATE IS TOO MAINSTREAM
