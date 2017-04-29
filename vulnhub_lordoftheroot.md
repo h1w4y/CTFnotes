@@ -202,6 +202,96 @@ PORT     STATE SERVICE VERSION
 
 ***
 ### Apache Service
+- version 2.4.7 (Ubuntu)  
+just firing up `burp` and hitting the 1337 port, I get a weird image back  
+`iwilldoit.jpg`  
+with the caption 
+```
+I WILL DO IT  
+I WILL TAKE THE 
+RING INTO 
+MORDOR
+```
+I happen to have burp Pro so i use its content discovery feature  
+dirb/dirbuster/owasp zap are other options for content discovery  
+I've only done a couple of these Vulnhub labs yet, and so far it's been LAMP stack, so I focus discovery on .php to start  
+
+<http://192.168.86.144:1337/home.php>
+LFI attempt:  
+<http://192.168.86.144:1337/home.php?../../../../etc/passwd>
+<http://192.168.86.144:1337/robots.txt>
+both return another meme image
+```
+SAM WE CANT GO THIS WAY
+THE BLACK GATE IS TOO MAINSTREAM
+```
+another image is found with a bunch of Legolas memes  
+
+<http://192.168.86.144:1337/images/>  
+has directory browsing/index enabled  
+
+```
+[IMG]	hipster.jpg	2015-09-17 16:23 	71K	 
+[IMG]	iwilldoit.jpg	2015-09-17 16:25 	36K	 
+[IMG]	legolas.jpg	2015-09-17 16:26 	175K	 
+```
+probably means nothing, but one images is much larger than the other two.  It's also the one that doesn't discourage us, but just repeats the name "legolas"  
+this makes me think it might be interesting to run it through a steganography program with the "legolas" password and see if anything interesting is returned
+
+<https://www.blackmoreops.com/2017/01/11/steganography-in-kali-linux-hiding-data-in-image/>
+trying words found in the legolas jpg first 
+
+```
+root@kali:~/LordOfTheRoot/images# steghide extract -p leglesslegolas -sf legolas.jpg
+steghide: could not extract any data with that passphrase!
+root@kali:~/LordOfTheRoot/images# steghide extract -sf legolas.jpg -p leggomylegoeggoleglesslegolegolas
+steghide: could not extract any data with that passphrase!
+root@kali:~/LordOfTheRoot/images# steghide extract -sf legolas.jpg -p "leglesslegolegolas\'s lego lass"
+steghide: could not extract any data with that passphrase!
+```
+starting to think ths was a pretty desperate attempt...  
+going to try another route  
+will make a word list (including uppercase) if i come back to this steganography
+
+another look at home.php shows an html comment just after the image tag
+```
+<html>
+<img src="/images/hipster.jpg" align="middle">
+<!--THprM09ETTBOVEl4TUM5cGJtUmxlQzV3YUhBPSBDbG9zZXIh>
+</html>
+```
+base64 decode the string (i just select the string in burp and right-click)
+```
+Lzk3ODM0NTIxMC9pbmRleC5waHA= Closer!
+```
+pretty clearly another base64 encoded string  
+I copy it from the mini-decoder in burp and plug it into the decoder tab and base64 decode
+```
+/978345210/index.php 
+```
+<http://192.168.86.144:1337/978345210/index.php>
+is a login page
+```
+<title>LOTR Login!</title>
+</head>
+<body>
+<div id="main">
+<h1>Welcome to the Gates of Mordor</h1>
+<div id="login">
+<form action="" method="post">
+<label>User :</label>
+<input id="name" name="username" placeholder="username" type="text"><br>
+<label>Password :</label>
+<input id="password" name="password" placeholder="**********" type="password">
+```
+also found under <http://192.168.86.144:1337/978345210/>
+login.php  
+logout.php  
+profile.php  
+
+the profile page references the legolas.img from the previous `image` directory  
+
+Next try some sqli
 
 
 ***
