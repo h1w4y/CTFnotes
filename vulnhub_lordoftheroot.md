@@ -24,12 +24,13 @@
 ### Speculations and Hints
 * smeagol is the default login from the vm's GUI console
 * the word "knock" is used in the `ssh` banner.  possibly a hint to try port knocking
-
+* images from web page - steganography??
 
 ***
 ### Lessons Learned
-* [ ] do more reading on dirtycow (probably not relevant to this vm, but questions came up for me)
-* [ ] what are best practices/tools for pentesting `knockd`?
+* do more reading on dirtycow (probably not relevant to this vm, but questions came up for me)
+* what are best practices/tools for pentesting `knockd`?
+* always read the source in these web pages right away. 2nd VM with a clue in html comments.  that was way too much overthinking to jump to steganography for a clue before looking thoroughly at the webpage source
 
 ***
 ### VM ToDos
@@ -37,8 +38,6 @@
 * [x] port knocking 
 * [x] port knocking clients or `scapy` for port knocking
 * [ ] fuzz the login page in the hidden webdir (start with sqli)
-
-
 
 ***
 ### Network Discovery
