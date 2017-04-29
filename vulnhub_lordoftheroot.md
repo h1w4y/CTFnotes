@@ -238,7 +238,7 @@ has directory browsing/index enabled
 probably means nothing, but one images is much larger than the other two.  It's also the one that doesn't discourage us, but just repeats the name "legolas"  
 this makes me think it might be interesting to run it through a steganography program with the "legolas" password and see if anything interesting is returned
 
-<https://www.blackmoreops.com/2017/01/11/steganography-in-kali-linux-hiding-data-in-image/>
+<https://www.blackmoreops.com/2017/01/11/steganography-in-kali-linux-hiding-data-in-image/>  
 trying words found in the legolas jpg first 
 
 ```
@@ -284,14 +284,15 @@ is a login page
 <label>Password :</label>
 <input id="password" name="password" placeholder="**********" type="password">
 ```
-also found under <http://192.168.86.144:1337/978345210/>
-login.php  
-logout.php  
-profile.php  
+also found under <http://192.168.86.144:1337/978345210/>  
+> login.php  
+> logout.php  
+> profile.php  
 
-the profile page references the legolas.img from the previous `image` directory  
+the profile page references the `legolas.img` from the previous `image` directory  
 
-Next try some sqli
+going to sleep.  
+Next will try some sqli on the login form
 
 
 ***
