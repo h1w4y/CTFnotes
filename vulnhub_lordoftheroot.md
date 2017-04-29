@@ -35,7 +35,8 @@
 ### VM ToDos
 * [x] port scan  
 * [x] port knocking 
-* [ ] port knocking clients or `scapy` for port knocking
+* [x] port knocking clients or `scapy` for port knocking
+* [ ] fuzz the login page in the hidden webdir (start with sqli)
 
 
 
